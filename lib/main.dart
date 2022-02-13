@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 
+import 'ClockTimer.dart';
+import 'TaskTimer.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft])
+  SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight])
       .then((_) {
     runApp(new MyApp());
   });
@@ -18,50 +21,41 @@ class MyApp extends StatelessWidget {
       title: 'Timer App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        brightness: Brightness.dark,
-        //scaffoldBackgroundColor: Colors.grey,
       ),
-      home: ClockTimer(),
-    );
-  }
-}
-
-class ClockTimer extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _ClockTimerState();
-  }
-}
-
-class _ClockTimerState extends State<ClockTimer> {
-  /// タイマー文字列用
-  String _time = '';
-
-  @override
-  void initState() {
-    super.initState();
-
-    Timer.periodic(Duration(seconds: 1), _onTimer);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Text(_time,
-            style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.w500,
-                color: Colors.white)),
+      home: Scaffold(
+        body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ClockTimer(),
+              Center(
+                child: TaskTimer(),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 105,
+                    child: Image.asset('images/break.png'),
+                  ),
+                  SizedBox(
+                    width: 85,
+                  ),
+                  Container(
+                    width: 105,
+                    child: Image.asset('images/mtg.png'),
+                  ),
+                  SizedBox(
+                    width: 85,
+                  ),
+                  Container(
+                    width: 105,
+                    child: Image.asset('images/other.png'),
+                  ),
+                ],
+              )
+            ]),
+        backgroundColor: Colors.grey[800],
       ),
     );
-  }
-
-  void _onTimer(Timer timer) {
-    var now = DateTime.now();
-    var dateFormat = DateFormat('yyyy/MM/dd HH:mm');
-    var timeString = dateFormat.format(now);
-    setState(() => {_time = timeString});
   }
 }
