@@ -26,7 +26,7 @@ class _TaskTimerState extends State<TaskTimer> {
   Widget build(BuildContext context) {
     return Container(
       width: 580.0,
-      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+      padding: EdgeInsets.only(top: 11, left: 10, right: 10),
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(

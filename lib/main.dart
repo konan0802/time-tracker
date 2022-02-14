@@ -34,21 +34,21 @@ class MyApp extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 105,
+                    width: 120,
                     child: Image.asset('images/break.png'),
                   ),
                   SizedBox(
                     width: 85,
                   ),
                   Container(
-                    width: 105,
+                    width: 120,
                     child: Image.asset('images/mtg.png'),
                   ),
                   SizedBox(
                     width: 85,
                   ),
                   Container(
-                    width: 105,
+                    width: 120,
                     child: Image.asset('images/other.png'),
                   ),
                 ],
