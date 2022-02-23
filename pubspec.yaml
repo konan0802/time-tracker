@@ -63,8 +63,8 @@ flutter:
     - images/break.png
     - images/mtg.png
     - images/other.png
-    - images/open-lock.png
-    - images/close-lock.png
+    - images/open.png
+    - images/lock.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

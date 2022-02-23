@@ -12,3 +12,10 @@ toggl_pomodoro_appは[Toggl](https://toggl.com/)を<br>
 # Installation
 
 # Usage
+
+# Get Start
+```bash
+$ cd toggl_pomodoro_app
+$ open -a Simulator
+$ flutter run
+```
