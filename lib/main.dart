@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'ClockTimer.dart';
 import 'TaskTimer.dart';
+import 'TaskButton.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,33 +27,14 @@ class MyApp extends StatelessWidget {
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              // 現在の日時表示
               ClockTimer(),
+              // タスク表示
               Center(
                 child: TaskTimer(),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 120,
-                    child: Image.asset('images/break.png'),
-                  ),
-                  SizedBox(
-                    width: 85,
-                  ),
-                  Container(
-                    width: 120,
-                    child: Image.asset('images/mtg.png'),
-                  ),
-                  SizedBox(
-                    width: 85,
-                  ),
-                  Container(
-                    width: 120,
-                    child: Image.asset('images/other.png'),
-                  ),
-                ],
-              )
+              // タスクボタン
+              TaskButton(),
             ]),
         backgroundColor: Colors.grey[800],
       ),
