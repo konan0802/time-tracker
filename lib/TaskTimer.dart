@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
+import 'TotalTaskTimer.dart';
+
 class TaskTimer extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -11,9 +13,9 @@ class TaskTimer extends StatefulWidget {
 
 class _TaskTimerState extends State<TaskTimer> {
   /// タイマー文字列用
-  String _name = '';
-  String _time = '';
-  String _totalTime = '';
+  String _taskName = '';
+  String _taskTime = '';
+  String _totalTaskTime = '';
 
   @override
   void initState() {
@@ -38,17 +40,29 @@ class _TaskTimerState extends State<TaskTimer> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text("> develop（API: kwmonitoring）",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white)),
-          Center(
-            child: Text(_time,
+          Text(
+            "> develop（API: kwmonitoring）",
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 50,
+              ),
+              Text(
+                _taskTime,
                 style: TextStyle(
-                    fontSize: 97,
+                    fontSize: 98,
                     fontWeight: FontWeight.w600,
-                    color: Colors.white)),
+                    color: Colors.white),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              TotalTaskTimer(),
+            ],
           )
         ],
       ),
@@ -60,7 +74,7 @@ class _TaskTimerState extends State<TaskTimer> {
     var dateFormat = DateFormat('HH:mm');
     var timeString = dateFormat.format(now);
     if (mounted) {
-      setState(() => {_time = timeString});
+      setState(() => {_taskTime = timeString});
     }
   }
 }
