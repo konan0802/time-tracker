@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'TotalTaskInfo.dart';
 import 'TogglTask.dart';
+import 'TaskTime.dart';
+import 'TotalTaskInfo.dart';
 
 class TaskInfo extends StatefulWidget {
   @override
@@ -17,21 +19,22 @@ class TaskInfo extends StatefulWidget {
 class _TaskInfoState extends State<TaskInfo> {
   /// タイマー文字列用
   String _taskName = '';
-  String _taskTime = '';
-  String _totalTaskTime = '';
+  String _taskTimeMinutes = '';
+  String _taskTimeSeconds = '';
+  String _totalTaskHour = '';
+  String _totalTaskMinutes = '';
 
   @override
   void initState() {
     super.initState();
 
-    fetchTogglTask();
-
-    //Timer.periodic(Duration(seconds: 1), fetchTogglTask);
+    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      fetchTogglTask();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("bbb");
     return Container(
       width: 580.0,
       padding: EdgeInsets.only(top: 11, left: 10, right: 10),
@@ -47,7 +50,7 @@ class _TaskInfoState extends State<TaskInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            _taskName,
+            "> " + _taskName,
             style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
           ),
@@ -55,17 +58,11 @@ class _TaskInfoState extends State<TaskInfo> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 50,
+                width: 55,
               ),
-              Text(
-                _taskTime,
-                style: TextStyle(
-                    fontSize: 98,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white),
-              ),
-              SizedBox(
-                width: 30,
+              Container(
+                width: 290.0,
+                child: TaskTime(_taskTimeMinutes, _taskTimeSeconds),
               ),
               TotalTaskInfo(),
             ],
@@ -80,8 +77,7 @@ class _TaskInfoState extends State<TaskInfo> {
     final response = await http.get(Uri.parse(url), headers: {
       "Content-Type": "application/json",
       "Authorization": 'Basic ' +
-          base64Encode(
-              utf8.encode('4f5a97b5555c23ba00eaa7da624a7ade:api_token'))
+          base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
     });
     if (response.statusCode == 200) {
       TogglTask togglTask =
@@ -94,11 +90,44 @@ class _TaskInfoState extends State<TaskInfo> {
       var durationM = duration ~/ 60;
       var durationS = duration % 60;
       setState(() {
-        _taskTime = durationM.toString();
+        _taskTimeMinutes = durationM.toString();
+        _taskTimeSeconds = durationS.toString();
         _taskName = togglTask.description;
       });
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load toggl');
     }
   }
+
+/*
+  Future<void> fetchTogglTotalTask(String lastmonth, String taskName) async {
+    String url = 'https://api.track.toggl.com/reports/api/v2/details';
+    url +=
+        '?workspace_id=${dotenv.env['WORKSPACE_ID']}&since=${lastmonth}&user_agent=konanforbis@gmail.com&description=${taskName}';
+    final response = await http.get(Uri.parse(url), headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' +
+          base64Encode(
+              utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
+    });
+    if (response.statusCode == 200) {
+      TogglTask togglTask =
+          TogglTask.fromJson(jsonDecode(response.body)["data"]);
+
+      // タスク経過時間 = 現在の時刻 - タスクの開始時刻
+      var now = DateTime.now();
+      var start = DateTime.parse(togglTask.start);
+      var duration = now.difference(start).inSeconds;
+      var durationM = duration ~/ 60;
+      var durationS = duration % 60;
+      setState(() {
+        _taskTimeMinutes = durationM.toString();
+        _taskTimeSeconds = durationS.toString();
+        _taskName = togglTask.description;
+      });
+    } else {
+      throw Exception('Failed to load toggl');
+    }
+  }
+  */
 }
