@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-import 'TotalTaskTimer.dart';
+import 'TotalTaskInfo.dart';
+import 'TogglTask.dart';
 
-class TaskTimer extends StatefulWidget {
+class TaskInfo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _TaskTimerState();
+    return _TaskInfoState();
   }
 }
 
-class _TaskTimerState extends State<TaskTimer> {
+class _TaskInfoState extends State<TaskInfo> {
   /// タイマー文字列用
   String _taskName = '';
   String _taskTime = '';
@@ -21,11 +24,14 @@ class _TaskTimerState extends State<TaskTimer> {
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1), _onTimer);
+    fetchTogglTask();
+
+    //Timer.periodic(Duration(seconds: 1), fetchTogglTask);
   }
 
   @override
   Widget build(BuildContext context) {
+    print("bbb");
     return Container(
       width: 580.0,
       padding: EdgeInsets.only(top: 11, left: 10, right: 10),
@@ -41,7 +47,7 @@ class _TaskTimerState extends State<TaskTimer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "> develop（API: kwmonitoring）",
+            _taskName,
             style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
           ),
@@ -61,7 +67,7 @@ class _TaskTimerState extends State<TaskTimer> {
               SizedBox(
                 width: 30,
               ),
-              TotalTaskTimer(),
+              TotalTaskInfo(),
             ],
           )
         ],
@@ -69,12 +75,30 @@ class _TaskTimerState extends State<TaskTimer> {
     );
   }
 
-  void _onTimer(Timer timer) {
-    var now = DateTime.now();
-    var dateFormat = DateFormat('HH:mm');
-    var timeString = dateFormat.format(now);
-    if (mounted) {
-      setState(() => {_taskTime = timeString});
+  Future<void> fetchTogglTask() async {
+    String url = 'https://api.track.toggl.com/api/v8/time_entries/current';
+    final response = await http.get(Uri.parse(url), headers: {
+      "Content-Type": "application/json",
+      "Authorization": 'Basic ' +
+          base64Encode(
+              utf8.encode('4f5a97b5555c23ba00eaa7da624a7ade:api_token'))
+    });
+    if (response.statusCode == 200) {
+      TogglTask togglTask =
+          TogglTask.fromJson(jsonDecode(response.body)["data"]);
+
+      // タスク経過時間 = 現在の時刻 - タスクの開始時刻
+      var now = DateTime.now();
+      var start = DateTime.parse(togglTask.start);
+      var duration = now.difference(start).inSeconds;
+      var durationM = duration ~/ 60;
+      var durationS = duration % 60;
+      setState(() {
+        _taskTime = durationM.toString();
+        _taskName = togglTask.description;
+      });
+    } else {
+      throw Exception('Failed to load album');
     }
   }
 }

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
-class TotalTaskTimer extends StatefulWidget {
+class TotalTaskInfo extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _TotalTaskTimerState();
+    return _TotalTaskInfoState();
   }
 }
 
-class _TotalTaskTimerState extends State<TotalTaskTimer> {
+class _TotalTaskInfoState extends State<TotalTaskInfo> {
   /// タイマー文字列用
   String _name = '';
   String _time = '';
@@ -19,7 +19,7 @@ class _TotalTaskTimerState extends State<TotalTaskTimer> {
   void initState() {
     super.initState();
 
-    Timer.periodic(Duration(seconds: 1), _onTimer);
+    //Timer.periodic(Duration(seconds: 1), _onTimer);
   }
 
   @override
@@ -27,8 +27,8 @@ class _TotalTaskTimerState extends State<TotalTaskTimer> {
     return Container(
       width: 140.0,
       decoration: BoxDecoration(
-        border: const Border(
-          bottom: const BorderSide(
+        border: Border(
+          bottom: BorderSide(
             color: Colors.white,
             width: 2.0,
           ),

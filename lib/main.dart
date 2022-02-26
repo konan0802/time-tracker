@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 
 import 'ClockTimer.dart';
-import 'TaskTimer.dart';
+import 'TaskInfo.dart';
 import 'TaskButton.dart';
 
 void main() {
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
               ClockTimer(),
               // タスク表示
               Center(
-                child: TaskTimer(),
+                child: TaskInfo(),
               ),
               // タスクボタン
               TaskButton(),
