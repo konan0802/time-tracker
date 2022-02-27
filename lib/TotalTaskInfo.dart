@@ -23,7 +23,7 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
   Widget build(BuildContext context) {
     return Container(
       width: 140.0,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: Colors.white,
@@ -34,7 +34,7 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               "TOTAL",
               style: TextStyle(
                   fontSize: 18,
@@ -46,12 +46,12 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
               children: [
                 Text(
                   widget._totalTaskTimeHour,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
-                Text(
+                const Text(
                   "h",
                   style: TextStyle(
                       height: 1.8,
@@ -61,12 +61,12 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
                 ),
                 Text(
                   widget._totalTaskTimeMinutes.padLeft(2, "0"),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
-                Text(
+                const Text(
                   "m",
                   style: TextStyle(
                       height: 1.8,

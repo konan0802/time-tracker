@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'config.dart';
 
 class TaskButton extends StatefulWidget {
+  const TaskButton({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _TaskButtonState();
@@ -12,29 +18,56 @@ class TaskButton extends StatefulWidget {
 class _TaskButtonState extends State<TaskButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 120,
-          child: Image.asset('images/break.png'),
+        IconButton(
+          icon: Image.asset('images/break.png'),
+          iconSize: 123,
+          onPressed: () {
+            setTogglTask(BreakTime);
+          },
         ),
-        SizedBox(
-          width: 85,
+        const SizedBox(
+          width: 75,
         ),
-        Container(
-          width: 120,
-          child: Image.asset('images/mtg.png'),
+        IconButton(
+          icon: Image.asset('images/mtg.png'),
+          iconSize: 123,
+          onPressed: () {
+            setTogglTask(MtgTime);
+          },
         ),
-        SizedBox(
-          width: 85,
+        const SizedBox(
+          width: 75,
         ),
-        Container(
-          width: 120,
-          child: Image.asset('images/other.png'),
+        IconButton(
+          icon: Image.asset('images/other.png'),
+          iconSize: 123,
+          onPressed: () {
+            setTogglTask(OtherTime);
+          },
         ),
       ],
-    ));
+    );
+  }
+
+  Future<void> setTogglTask(String taskName) async {
+    String url = 'https://api.track.toggl.com/api/v8/time_entries/start';
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Basic ' +
+          base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
+    };
+    String body = json.encode({
+      'time_entry': {
+        'description': taskName,
+        'pid': dotenv.env['PROJECT_ID'],
+        'created_with': 'toggl_pomodoro_app'
+      }
+    });
+    try {
+      await http.post(Uri.parse(url), headers: headers, body: body);
+    } catch (e) {}
   }
 }

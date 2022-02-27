@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 
 class ClockTimer extends StatefulWidget {
+  const ClockTimer({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ClockTimerState();
@@ -23,9 +25,9 @@ class _ClockTimerState extends State<ClockTimer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10, left: 20, bottom: 5),
+      margin: const EdgeInsets.only(top: 10, left: 20, bottom: 5),
       child: Text(_time,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 30, fontWeight: FontWeight.w500, color: Colors.white)),
     );
   }

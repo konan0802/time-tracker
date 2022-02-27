@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -13,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight])
       .then((_) {
-    runApp(new MyApp());
+    runApp(MyApp());
   });
 }
 
@@ -30,13 +28,13 @@ class MyApp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               // 現在の日時表示
-              ClockTimer(),
+              const ClockTimer(),
               // タスク表示
               Center(
                 child: TaskInfo(),
               ),
               // タスクボタン
-              TaskButton(),
+              const TaskButton(),
             ]),
         backgroundColor: Colors.grey[800],
       ),

@@ -36,20 +36,20 @@ class _TaskInfoState extends State<TaskInfo> {
     super.initState();
 
     // 現在タスクの管理
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       fetchTogglTask();
     });
 
     // タスクのトータル時間の管理
-    var lastmonth = DateTime.now().add(Duration(days: 30) * -1);
+    var lastmonth = DateTime.now().add(const Duration(days: 30) * -1);
     var dateFormat = DateFormat('yyyy-MM-dd');
     var timeString = dateFormat.format(lastmonth);
-    Timer.periodic(Duration(seconds: 10), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 10), (Timer timer) {
       fetchTogglTotalTask(timeString, _taskName);
     });
 
     // アラート管理
-    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       manageTaskInfoColor();
     });
   }
@@ -58,11 +58,15 @@ class _TaskInfoState extends State<TaskInfo> {
   Widget build(BuildContext context) {
     return Container(
       width: 580.0,
-      padding: EdgeInsets.only(top: 11, left: 10, right: 10),
-      margin: EdgeInsets.all(10),
+      padding: const EdgeInsets.only(top: 11, left: 10, right: 10),
+      margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
       decoration: BoxDecoration(
         color: Color.fromARGB(
-            255, _taskInfoCllorR, _taskInfoCllorG, _taskInfoCllorB),
+          255,
+          _taskInfoCllorR,
+          _taskInfoCllorG,
+          _taskInfoCllorB,
+        ),
         border: Border.all(
           color: Colors.white,
           width: 3.0,
@@ -72,23 +76,30 @@ class _TaskInfoState extends State<TaskInfo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            "> " + _taskName,
-            style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.w600, color: Colors.white),
+          Container(
+            height: 28,
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              _taskName,
+              style: const TextStyle(
+                fontSize: 23,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 55,
               ),
-              Container(
+              SizedBox(
                 width: 290.0,
                 child: TaskTime(_taskTimeMinutes, _taskTimeSeconds),
               ),
               Container(
-                padding: EdgeInsets.only(top: 15),
+                padding: const EdgeInsets.only(top: 15),
                 child: TotalTaskInfo(_totalTaskTimeHour, _totalTaskTimeMinutes),
               ),
             ],
@@ -100,11 +111,12 @@ class _TaskInfoState extends State<TaskInfo> {
 
   Future<void> fetchTogglTask() async {
     String url = 'https://api.track.toggl.com/api/v8/time_entries/current';
-    final response = await http.get(Uri.parse(url), headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' +
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Basic ' +
           base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
-    });
+    };
+    final response = await http.get(Uri.parse(url), headers: headers);
     try {
       TogglTask togglTask =
           TogglTask.fromJson(jsonDecode(response.body)["data"]);
@@ -138,13 +150,16 @@ class _TaskInfoState extends State<TaskInfo> {
       return;
     }
     String url = 'https://api.track.toggl.com/reports/api/v2/details';
-    url +=
-        '?workspace_id=${dotenv.env['WORKSPACE_ID']}&since=${lastmonth}&user_agent=konanforbis@gmail.com&description=${taskName}';
-    final response = await http.get(Uri.parse(url), headers: {
-      "Content-Type": "application/json",
-      "Authorization": 'Basic ' +
+    url += '?workspace_id=${dotenv.env['WORKSPACE_ID']}';
+    url += '&since=$lastmonth';
+    url += '&user_agent=konanforbis@gmail.com';
+    url += '&description=$taskName';
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Basic ' +
           base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
-    });
+    };
+    final response = await http.get(Uri.parse(url), headers: headers);
     List<TogglReport> togglReport = [];
     try {
       final List<dynamic> responsedTogglReport =
@@ -206,7 +221,7 @@ class _TaskInfoState extends State<TaskInfo> {
         _taskInfoCllorG = 67;
         _taskInfoCllorB = 67;
       });
-    } else if (_taskTime >= 2100) {
+    } else if (_taskTime >= 1500) {
       setState(() {
         _taskInfoCllorR = 191;
         _taskInfoCllorG = 67;
