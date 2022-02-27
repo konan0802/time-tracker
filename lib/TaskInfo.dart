@@ -9,6 +9,7 @@ import 'TogglTask.dart';
 import 'TogglReport.dart';
 import 'TaskTime.dart';
 import 'TotalTaskInfo.dart';
+import 'config.dart';
 
 class TaskInfo extends StatefulWidget {
   @override
@@ -26,19 +27,30 @@ class _TaskInfoState extends State<TaskInfo> {
   String _totalTaskTimeHour = '';
   String _totalTaskTimeMinutes = '';
 
+  int _taskInfoCllorR = 66;
+  int _taskInfoCllorG = 66;
+  int _taskInfoCllorB = 66;
+
   @override
   void initState() {
     super.initState();
 
+    // 現在タスクの管理
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       fetchTogglTask();
     });
 
+    // タスクのトータル時間の管理
     var lastmonth = DateTime.now().add(Duration(days: 30) * -1);
     var dateFormat = DateFormat('yyyy-MM-dd');
     var timeString = dateFormat.format(lastmonth);
     Timer.periodic(Duration(seconds: 10), (Timer timer) {
       fetchTogglTotalTask(timeString, _taskName);
+    });
+
+    // アラート管理
+    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      manageTaskInfoColor();
     });
   }
 
@@ -49,6 +61,8 @@ class _TaskInfoState extends State<TaskInfo> {
       padding: EdgeInsets.only(top: 11, left: 10, right: 10),
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
+        color: Color.fromARGB(
+            255, _taskInfoCllorR, _taskInfoCllorG, _taskInfoCllorB),
         border: Border.all(
           color: Colors.white,
           width: 3.0,
@@ -110,18 +124,13 @@ class _TaskInfoState extends State<TaskInfo> {
       setState(() {
         _taskTimeMinutes = "?";
         _taskTimeSeconds = "??";
-        _taskName = "[No current task]";
+        _taskName = NoTask;
       });
     }
   }
 
   Future<void> fetchTogglTotalTask(String lastmonth, String taskName) async {
-    if (taskName == 'MTGタスク' ||
-        taskName == '開発部 全般タスク' ||
-        taskName == 'その他(工数見積・サポート)' ||
-        taskName == '全社タスク(開発関係以外)' ||
-        taskName == '【昼休憩】※ 予定OK' ||
-        taskName == 'Give me a break !!') {
+    if (isCheckFixedTasks(taskName)) {
       setState(() {
         _totalTaskTimeHour = "--";
         _totalTaskTimeMinutes = "--";
@@ -149,7 +158,7 @@ class _TaskInfoState extends State<TaskInfo> {
       for (int i = 0; i < togglReport.length; i++) {
         total += togglReport[i].dur;
       }
-      var duration = ((total * 0.001) + _taskTime) * 0.017;
+      var duration = ((total * 0.001) + _taskTime) * 0.016666666666667;
       var durationH = duration ~/ 60;
       var durationM = (duration % 60).floor();
       setState(() {
@@ -162,5 +171,62 @@ class _TaskInfoState extends State<TaskInfo> {
         _totalTaskTimeMinutes = "??";
       });
     }
+  }
+
+  /*
+    アラート条件
+    ・タスクなし:  アラート
+    ・MtgTime:   アラートなし
+    ・BreakTime: 5分以上でアラート
+    ・LunchTime: 60分以上でアラート
+    ・上記以外:    25分以上でアラート
+  */
+  void manageTaskInfoColor() {
+    if (_taskName == NoTask) {
+      setState(() {
+        _taskInfoCllorR = 191;
+        _taskInfoCllorG = 67;
+        _taskInfoCllorB = 67;
+      });
+    } else if (_taskName == MtgTime) {
+      setState(() {
+        _taskInfoCllorR = 66;
+        _taskInfoCllorG = 66;
+        _taskInfoCllorB = 66;
+      });
+    } else if (_taskName == BreakTime && _taskTime >= 300) {
+      setState(() {
+        _taskInfoCllorR = 191;
+        _taskInfoCllorG = 67;
+        _taskInfoCllorB = 67;
+      });
+    } else if (_taskName == LunchTime && _taskTime >= 3600) {
+      setState(() {
+        _taskInfoCllorR = 191;
+        _taskInfoCllorG = 67;
+        _taskInfoCllorB = 67;
+      });
+    } else if (_taskTime >= 2100) {
+      setState(() {
+        _taskInfoCllorR = 191;
+        _taskInfoCllorG = 67;
+        _taskInfoCllorB = 67;
+      });
+    } else {
+      setState(() {
+        _taskInfoCllorR = 66;
+        _taskInfoCllorG = 66;
+        _taskInfoCllorB = 66;
+      });
+    }
+  }
+
+  bool isCheckFixedTasks(String taskName) {
+    for (int j = 0; j < fexedTasks.length; j++) {
+      if (taskName == fexedTasks[j]) {
+        return true;
+      }
+    }
+    return false;
   }
 }
