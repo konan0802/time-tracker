@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 
 class TotalTaskInfo extends StatefulWidget {
+  final String _totalTaskTimeHour;
+  final String _totalTaskTimeMinutes;
+  TotalTaskInfo(this._totalTaskTimeHour, this._totalTaskTimeMinutes);
+
   @override
   State<StatefulWidget> createState() {
     return _TotalTaskInfoState();
@@ -10,16 +14,9 @@ class TotalTaskInfo extends StatefulWidget {
 }
 
 class _TotalTaskInfoState extends State<TotalTaskInfo> {
-  /// タイマー文字列用
-  String _name = '';
-  String _time = '';
-  String _totalTime = '';
-
   @override
   void initState() {
     super.initState();
-
-    //Timer.periodic(Duration(seconds: 1), _onTimer);
   }
 
   @override
@@ -40,29 +37,46 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
             Text(
               "TOTAL",
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
-            Center(
-              child: Text(
-                "3:24",
-                style: TextStyle(
-                    fontSize: 47,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white),
-              ),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget._totalTaskTimeHour,
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                Text(
+                  "h",
+                  style: TextStyle(
+                      height: 1.8,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                Text(
+                  widget._totalTaskTimeMinutes.padLeft(2, "0"),
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+                Text(
+                  "m",
+                  style: TextStyle(
+                      height: 1.8,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ),
+              ],
+            )
           ]),
     );
-  }
-
-  void _onTimer(Timer timer) {
-    var now = DateTime.now();
-    var dateFormat = DateFormat('HH:mm');
-    var timeString = dateFormat.format(now);
-    if (mounted) {
-      setState(() => {_time = timeString});
-    }
   }
 }
