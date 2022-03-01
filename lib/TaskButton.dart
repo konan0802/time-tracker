@@ -22,16 +22,6 @@ class _TaskButtonState extends State<TaskButton> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-          icon: Image.asset('images/break.png'),
-          iconSize: 123,
-          onPressed: () {
-            setTogglTask(BreakTime);
-          },
-        ),
-        const SizedBox(
-          width: 75,
-        ),
-        IconButton(
           icon: Image.asset('images/mtg.png'),
           iconSize: 123,
           onPressed: () {
@@ -46,6 +36,16 @@ class _TaskButtonState extends State<TaskButton> {
           iconSize: 123,
           onPressed: () {
             setTogglTask(OtherTime);
+          },
+        ),
+        const SizedBox(
+          width: 75,
+        ),
+        IconButton(
+          icon: Image.asset('images/break.png'),
+          iconSize: 123,
+          onPressed: () {
+            setTogglTask(BreakTime);
           },
         ),
       ],

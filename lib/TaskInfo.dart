@@ -59,7 +59,7 @@ class _TaskInfoState extends State<TaskInfo> {
     return Container(
       width: 580.0,
       padding: const EdgeInsets.only(top: 11, left: 10, right: 10),
-      margin: const EdgeInsets.only(top: 13, left: 10, right: 10),
+      margin: const EdgeInsets.only(top: 13, left: 10, right: 10, bottom: 1),
       decoration: BoxDecoration(
         color: Color.fromARGB(
           255,
