@@ -62,12 +62,13 @@ class _TaskButtonState extends State<TaskButton> {
     String body = json.encode({
       'time_entry': {
         'description': taskName,
-        'pid': dotenv.env['PROJECT_ID'],
         'created_with': 'toggl_pomodoro_app'
       }
     });
-    try {
-      await http.post(Uri.parse(url), headers: headers, body: body);
-    } catch (e) {}
+    http.Response resp =
+        await http.post(Uri.parse(url), headers: headers, body: body);
+    if (resp.statusCode != 200) {
+      print(resp.body);
+    }
   }
 }
