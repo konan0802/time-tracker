@@ -192,8 +192,7 @@ class _TaskInfoState extends State<TaskInfo> {
     アラート条件
     ・タスクなし:  アラート
     ・MtgTime:   アラートなし
-    ・BreakTime: 5分以上でアラート
-    ・RestTime: 60分以上でアラート
+    ・BreakTime: 60分以上でアラート
     ・上記以外:    25分以上でアラート
   */
   void manageTaskInfoColor() {
@@ -209,19 +208,13 @@ class _TaskInfoState extends State<TaskInfo> {
         _taskInfoCllorG = 66;
         _taskInfoCllorB = 66;
       });
-    } else if (_taskName == BreakTime && _taskTime >= 300) {
+    } else if (_taskName != BreakTime && _taskTime >= 1500) {
       setState(() {
         _taskInfoCllorR = 191;
         _taskInfoCllorG = 67;
         _taskInfoCllorB = 67;
       });
-    } else if (_taskName != RestTime && _taskTime >= 1500) {
-      setState(() {
-        _taskInfoCllorR = 191;
-        _taskInfoCllorG = 67;
-        _taskInfoCllorB = 67;
-      });
-    } else if (_taskName == RestTime && _taskTime >= 3600) {
+    } else if (_taskName == BreakTime && _taskTime >= 3600) {
       setState(() {
         _taskInfoCllorR = 191;
         _taskInfoCllorG = 67;
