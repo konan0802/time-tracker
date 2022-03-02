@@ -127,26 +127,32 @@ class _TaskInfoState extends State<TaskInfo> {
       _taskTime = now.difference(start).inSeconds;
       var durationM = _taskTime ~/ 60;
       var durationS = _taskTime % 60;
-      setState(() {
-        _taskTimeMinutes = durationM == null ? "?" : durationM.toString();
-        _taskTimeSeconds = durationS == null ? "?" : durationS.toString();
-        _taskName = togglTask.description;
-      });
+      if (mounted) {
+        setState(() {
+          _taskTimeMinutes = durationM == null ? "?" : durationM.toString();
+          _taskTimeSeconds = durationS == null ? "?" : durationS.toString();
+          _taskName = togglTask.description;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _taskTimeMinutes = "?";
-        _taskTimeSeconds = "??";
-        _taskName = NoTask;
-      });
+      if (mounted) {
+        setState(() {
+          _taskTimeMinutes = "?";
+          _taskTimeSeconds = "??";
+          _taskName = NoTask;
+        });
+      }
     }
   }
 
   Future<void> fetchTogglTotalTask(String lastmonth, String taskName) async {
     if (isCheckFixedTasks(taskName)) {
-      setState(() {
-        _totalTaskTimeHour = "--";
-        _totalTaskTimeMinutes = "--";
-      });
+      if (mounted) {
+        setState(() {
+          _totalTaskTimeHour = "--";
+          _totalTaskTimeMinutes = "--";
+        });
+      }
       return;
     }
     String url = 'https://api.track.toggl.com/reports/api/v2/details';
@@ -176,15 +182,19 @@ class _TaskInfoState extends State<TaskInfo> {
       var duration = ((total * 0.001) + _taskTime) * 0.016666666666667;
       var durationH = duration ~/ 60;
       var durationM = (duration % 60).floor();
-      setState(() {
-        _totalTaskTimeHour = durationH.toString();
-        _totalTaskTimeMinutes = durationM.toString();
-      });
+      if (mounted) {
+        setState(() {
+          _totalTaskTimeHour = durationH.toString();
+          _totalTaskTimeMinutes = durationM.toString();
+        });
+      }
     } catch (e) {
-      setState(() {
-        _totalTaskTimeHour = "?";
-        _totalTaskTimeMinutes = "??";
-      });
+      if (mounted) {
+        setState(() {
+          _totalTaskTimeHour = "?";
+          _totalTaskTimeMinutes = "??";
+        });
+      }
     }
   }
 
@@ -197,35 +207,45 @@ class _TaskInfoState extends State<TaskInfo> {
   */
   void manageTaskInfoColor() {
     if (_taskName == NoTask) {
-      setState(() {
-        _taskInfoCllorR = 191;
-        _taskInfoCllorG = 67;
-        _taskInfoCllorB = 67;
-      });
+      if (mounted) {
+        setState(() {
+          _taskInfoCllorR = 191;
+          _taskInfoCllorG = 67;
+          _taskInfoCllorB = 67;
+        });
+      }
     } else if (_taskName == MtgTime) {
-      setState(() {
-        _taskInfoCllorR = 66;
-        _taskInfoCllorG = 66;
-        _taskInfoCllorB = 66;
-      });
+      if (mounted) {
+        setState(() {
+          _taskInfoCllorR = 66;
+          _taskInfoCllorG = 66;
+          _taskInfoCllorB = 66;
+        });
+      }
     } else if (_taskName != BreakTime && _taskTime >= 1500) {
-      setState(() {
-        _taskInfoCllorR = 191;
-        _taskInfoCllorG = 67;
-        _taskInfoCllorB = 67;
-      });
+      if (mounted) {
+        setState(() {
+          _taskInfoCllorR = 191;
+          _taskInfoCllorG = 67;
+          _taskInfoCllorB = 67;
+        });
+      }
     } else if (_taskName == BreakTime && _taskTime >= 3600) {
-      setState(() {
-        _taskInfoCllorR = 191;
-        _taskInfoCllorG = 67;
-        _taskInfoCllorB = 67;
-      });
+      if (mounted) {
+        setState(() {
+          _taskInfoCllorR = 191;
+          _taskInfoCllorG = 67;
+          _taskInfoCllorB = 67;
+        });
+      }
     } else {
-      setState(() {
-        _taskInfoCllorR = 66;
-        _taskInfoCllorG = 66;
-        _taskInfoCllorB = 66;
-      });
+      if (mounted) {
+        setState(() {
+          _taskInfoCllorR = 66;
+          _taskInfoCllorG = 66;
+          _taskInfoCllorB = 66;
+        });
+      }
     }
   }
 

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-import 'ClockTimer.dart';
-import 'TaskInfo.dart';
-import 'TaskButton.dart';
+import 'TopPage.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -24,18 +22,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // 現在の日時表示
-              const ClockTimer(),
-              // タスク表示
-              Center(
-                child: TaskInfo(),
-              ),
-              // タスクボタン
-              const TaskButton(),
-            ]),
+        body: TopPage(),
         backgroundColor: Colors.grey[800],
       ),
     );
