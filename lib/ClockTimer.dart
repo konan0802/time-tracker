@@ -24,12 +24,9 @@ class _ClockTimerState extends State<ClockTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 10, left: 20, bottom: 5),
-      child: Text(_time,
-          style: const TextStyle(
-              fontSize: 30, fontWeight: FontWeight.w500, color: Colors.white)),
-    );
+    return Text(_time,
+        style: const TextStyle(
+            fontSize: 30, fontWeight: FontWeight.w500, color: Colors.white));
   }
 
   void _onTimer(Timer timer) {

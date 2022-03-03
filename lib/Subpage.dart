@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'ClockTimer.dart';
-import 'TaskInfo.dart';
-import 'TaskButton.dart';
 
-class TopPage extends StatelessWidget {
-  const TopPage({Key? key}) : super(key: key);
+class SubPage extends StatelessWidget {
+  const SubPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,21 +21,15 @@ class TopPage extends StatelessWidget {
                   width: 325,
                 ),
                 IconButton(
-                  icon: Image.asset('images/push.png'),
+                  icon: Image.asset('images/pop.png'),
                   iconSize: 30,
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/subpage");
+                    Navigator.of(context).pushNamed("/toppage");
                   },
                 ),
               ],
             ),
           ),
-          // タスク表示
-          Center(
-            child: TaskInfo(),
-          ),
-          // タスクボタン
-          const TaskButton(),
         ],
       ),
       backgroundColor: Colors.grey[800],

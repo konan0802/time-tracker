@@ -3,17 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'TopPage.dart';
+import 'SubPage.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight])
       .then((_) {
-    runApp(MyApp());
+    runApp(const MyApp());
   });
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,10 +24,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: TopPage(),
-        backgroundColor: Colors.grey[800],
-      ),
+      home: const TopPage(),
+      routes: {
+        "/toppage": (BuildContext context) => const TopPage(),
+        "/subpage": (BuildContext context) => const SubPage(),
+      },
     );
   }
 }

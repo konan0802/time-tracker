@@ -76,6 +76,8 @@ flutter:
     - images/other.png
     - images/open.png
     - images/lock.png
+    - images/push.png
+    - images/pop.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
