@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class TotalTaskInfo extends StatefulWidget {
+class TodaysTaskInfo extends StatefulWidget {
   final String _totalTaskTimeHour;
   final String _totalTaskTimeMinutes;
-  const TotalTaskInfo(this._totalTaskTimeHour, this._totalTaskTimeMinutes);
+  const TodaysTaskInfo(this._totalTaskTimeHour, this._totalTaskTimeMinutes);
 
   @override
   State<StatefulWidget> createState() {
-    return _TotalTaskInfoState();
+    return _TodaysTaskInfoState();
   }
 }
 
-class _TotalTaskInfoState extends State<TotalTaskInfo> {
+class _TodaysTaskInfoState extends State<TodaysTaskInfo> {
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const Text(
-              "Month",
+              "Today",
               style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,

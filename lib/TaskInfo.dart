@@ -8,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'TogglTask.dart';
 import 'TogglReport.dart';
 import 'TaskTime.dart';
+import 'TodaysTaskInfo.dart';
 import 'TotalTaskInfo.dart';
 import 'config.dart';
 
@@ -24,6 +25,8 @@ class _TaskInfoState extends State<TaskInfo> {
   int _taskTime = 0;
   String _taskTimeMinutes = '';
   String _taskTimeSeconds = '';
+  String _todaysTaskTimeHour = '';
+  String _todaysTaskTimeMinutes = '';
   String _totalTaskTimeHour = '';
   String _totalTaskTimeMinutes = '';
 
@@ -40,12 +43,20 @@ class _TaskInfoState extends State<TaskInfo> {
       fetchTogglTask();
     });
 
+    var dateFormat = DateFormat('yyyy-MM-dd');
+
+    // タスクの当日時間の管理
+    var today = DateTime.now();
+    var todayStr = dateFormat.format(today);
+    Timer.periodic(const Duration(seconds: 10), (Timer timer) {
+      fetchTodaysTogglTaskTime(todayStr, _taskName);
+    });
+
     // タスクのトータル時間の管理
     var lastmonth = DateTime.now().add(const Duration(days: 30) * -1);
-    var dateFormat = DateFormat('yyyy-MM-dd');
-    var timeString = dateFormat.format(lastmonth);
+    var totalStr = dateFormat.format(lastmonth);
     Timer.periodic(const Duration(seconds: 10), (Timer timer) {
-      fetchTogglTotalTask(timeString, _taskName);
+      fetchTogglTotalTask(totalStr, _taskName);
     });
 
     // アラート管理
@@ -73,37 +84,56 @@ class _TaskInfoState extends State<TaskInfo> {
         ),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 28,
-            padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              _taskName,
-              style: const TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w600,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 55,
-              ),
-              SizedBox(
-                width: 290.0,
-                child: TaskTime(_taskTimeMinutes, _taskTimeSeconds),
+      child: Row(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                height: 28,
+                padding: const EdgeInsets.only(left: 8),
+                child: Text(
+                  _taskName,
+                  style: const TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               Container(
-                padding: const EdgeInsets.only(top: 15),
-                child: TotalTaskInfo(_totalTaskTimeHour, _totalTaskTimeMinutes),
+                width: 340,
+                margin: const EdgeInsets.only(left: 58),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TaskTime(_taskTimeMinutes, _taskTimeSeconds),
+                  ],
+                ),
               ),
             ],
-          )
+          ),
+          const SizedBox(
+            width: 35,
+          ),
+          Container(
+            width: 100,
+            margin: const EdgeInsets.only(bottom: 10),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: TodaysTaskInfo(
+                      _todaysTaskTimeHour, _todaysTaskTimeMinutes),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 15),
+                  child:
+                      TotalTaskInfo(_totalTaskTimeHour, _totalTaskTimeMinutes),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -193,6 +223,60 @@ class _TaskInfoState extends State<TaskInfo> {
         setState(() {
           _totalTaskTimeHour = "?";
           _totalTaskTimeMinutes = "??";
+        });
+      }
+    }
+  }
+
+  Future<void> fetchTodaysTogglTaskTime(
+      String startTime, String taskName) async {
+    if (isCheckFixedTasks(taskName)) {
+      if (mounted) {
+        setState(() {
+          _todaysTaskTimeHour = "--";
+          _todaysTaskTimeMinutes = "--";
+        });
+      }
+      return;
+    }
+    String url = 'https://api.track.toggl.com/reports/api/v2/details';
+    url += '?workspace_id=${dotenv.env['WORKSPACE_ID']}';
+    url += '&since=$startTime';
+    url += '&user_agent=konanforbis@gmail.com';
+    url += '&description=$taskName';
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Basic ' +
+          base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
+    };
+    final response = await http.get(Uri.parse(url), headers: headers);
+    List<TogglReport> togglReport = [];
+    try {
+      final List<dynamic> responsedTogglReport =
+          jsonDecode(utf8.decode(response.body.runes.toList()))['data'];
+      togglReport = responsedTogglReport
+          .map((responsedTogglReport) =>
+              TogglReport.fromJson(responsedTogglReport))
+          .toList();
+
+      int total = 0;
+      for (int i = 0; i < togglReport.length; i++) {
+        total += togglReport[i].dur;
+      }
+      var duration = ((total * 0.001) + _taskTime) * 0.016666666666667;
+      var durationH = duration ~/ 60;
+      var durationM = (duration % 60).floor();
+      if (mounted) {
+        setState(() {
+          _todaysTaskTimeHour = durationH.toString();
+          _todaysTaskTimeMinutes = durationM.toString();
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _todaysTaskTimeHour = "?";
+          _todaysTaskTimeMinutes = "??";
         });
       }
     }

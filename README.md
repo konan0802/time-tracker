@@ -22,7 +22,7 @@ toggl_pomodoro_appは[Toggl](https://toggl.com/)を<br>
     ```
 * 実機にインストール
     ```bash
-    $ flutter clean 
+    $ flutter clean
     $ flutter build ios
 
     # デバイス一覧
