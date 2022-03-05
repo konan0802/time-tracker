@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:toggl_pomodoro_app/SubPage.dart';
 
 import 'TopPage.dart';
 
@@ -25,6 +26,10 @@ class MyApp extends StatelessWidget {
         body: TopPage(),
         backgroundColor: Colors.grey[800],
       ),
+      routes: {
+        "/toppage": (BuildContext context) => TopPage(),
+        "/subpage": (BuildContext context) => SubPage(),
+      },
     );
   }
 }
