@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:toggl_pomodoro_app/SubPage.dart';
 
 import 'TopPage.dart';
 
@@ -10,11 +9,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight])
       .then((_) {
-    runApp(MyApp());
+    runApp(const MyApp());
   });
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,14 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: TopPage(),
-        backgroundColor: Colors.grey[800],
-      ),
-      routes: {
-        "/toppage": (BuildContext context) => TopPage(),
-        "/subpage": (BuildContext context) => SubPage(),
-      },
+      home: const TopPage(),
     );
   }
 }
