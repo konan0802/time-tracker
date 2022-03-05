@@ -12,15 +12,15 @@ class TopPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
+        children: const <Widget>[
           // 現在の日時表示
-          const ClockTimer(),
+          ClockTimer(),
           // タスク表示
           Center(
             child: TaskInfo(),
           ),
           // タスクボタン
-          const TaskButton(),
+          TaskButton(),
         ],
       ),
       backgroundColor: Colors.grey[800],

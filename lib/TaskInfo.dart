@@ -13,6 +13,8 @@ import 'TotalTaskInfo.dart';
 import 'config.dart';
 
 class TaskInfo extends StatefulWidget {
+  const TaskInfo({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _TaskInfoState();
