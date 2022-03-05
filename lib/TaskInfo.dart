@@ -298,22 +298,6 @@ class _TaskInfoState extends State<TaskInfo> {
           _taskInfoCllorB = 67;
         });
       }
-    } else if (_taskName == MtgTime) {
-      if (mounted) {
-        setState(() {
-          _taskInfoCllorR = 66;
-          _taskInfoCllorG = 66;
-          _taskInfoCllorB = 66;
-        });
-      }
-    } else if (_taskName != BreakTime && _taskTime >= 1500) {
-      if (mounted) {
-        setState(() {
-          _taskInfoCllorR = 191;
-          _taskInfoCllorG = 67;
-          _taskInfoCllorB = 67;
-        });
-      }
     } else if (_taskName == BreakTime && _taskTime >= 3600) {
       if (mounted) {
         setState(() {
