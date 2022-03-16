@@ -26,7 +26,7 @@ toggl_pomodoro_appは[Toggl](https://toggl.com/)を<br>
     $ flutter build ios
 
     # デバイス一覧
-    $ flutter devices 
+    $ flutter devices
 
     # インストール
     $ flutter install -d {デバイス識別子の頭文字}
