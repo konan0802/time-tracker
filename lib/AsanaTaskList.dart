@@ -25,7 +25,7 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
     super.initState();
 
     final asanaAPI = AsanaAPI();
-    var tmp = asanaAPI.fetchfetchAsanaTaskstFromSectioons([Main, Spot]);
+    var tmp = asanaAPI.fetchAsanaTaskstFromSectioons([Main, Spot]);
     tmp.then((value) {
       setState(() => {_asanaSectionsTasks = value});
     });

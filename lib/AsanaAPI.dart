@@ -11,7 +11,7 @@ class AsanaAPI {
 
   /// @request  [1234, 5678]
   /// @response [{section: Main, task: []}, {section: Main, task: []}]
-  Future<List<Map<String, dynamic>>> fetchfetchAsanaTaskstFromSectioons(
+  Future<List<Map<String, dynamic>>> fetchAsanaTaskstFromSectioons(
       List<String> sectionIDs) async {
     List<Map<String, dynamic>> asanaTaskList = [];
     for (int i = 0; i < sectionIDs.length; i++) {
