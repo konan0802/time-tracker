@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:toggl_pomodoro_app/Header.dart';
 
 import 'Header.dart';
-import 'TaskInfo.dart';
-import 'TaskButton.dart';
+import 'AsanaTaskList.dart';
 
-class TopPage extends StatelessWidget {
-  const TopPage({Key? key}) : super(key: key);
+class SubPage extends StatelessWidget {
+  const SubPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +13,8 @@ class TopPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const <Widget>[
-          // 現在の日時表示
-          Header('push'),
-          // タスク表示
-          Center(
-            child: TaskInfo(),
-          ),
-          // タスクボタン
-          TaskButton(),
+          Header('pop'),
+          Flexible(child: AsanaTaskList())
         ],
       ),
       backgroundColor: Colors.grey[800],

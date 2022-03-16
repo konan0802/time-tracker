@@ -149,6 +149,10 @@ class _TaskInfoState extends State<TaskInfo> {
           base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
     };
     final response = await http.get(Uri.parse(url), headers: headers);
+    // 一時的な[Too Many Requests]のレスポンスは握り潰す
+    if (response.statusCode == 429) {
+      return;
+    }
     try {
       TogglTask togglTask =
           TogglTask.fromJson(jsonDecode(response.body)["data"]);

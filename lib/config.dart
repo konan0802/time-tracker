@@ -11,3 +11,19 @@ const fexedTasks = [
   '全社タスク(開発関係以外)',
   BreakTime
 ];
+
+String Main = '1201164375807533';
+String Spot = '1201073557779280';
+String Review = '1201405932474075';
+
+List<String> AsanaSectionList = [
+  Main,
+  Spot,
+  Review,
+];
+
+Map<String, String> SectionIDs = {
+  'Main': '1201164375807533',
+  'Spot': '1201073557779280',
+  'Review': '1201405932474075',
+};
