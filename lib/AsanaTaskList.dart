@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import 'AsanaAPI.dart';
-import 'AsanaTask.dart';
-import 'config.dart';
 
 class AsanaTaskList extends StatefulWidget {
   const AsanaTaskList({Key? key}) : super(key: key);
@@ -17,7 +15,7 @@ class AsanaTaskList extends StatefulWidget {
 class _AsanaTaskListState extends State<AsanaTaskList> {
   // タイマー文字列用
   List<Map<String, dynamic>> _asanaSectionsTasks = [
-    {'section': '--', 'task': '--'}
+    {'group': '--', 'task': '--'}
   ];
 
   @override
@@ -25,7 +23,9 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
     super.initState();
 
     final asanaAPI = AsanaAPI();
-    var tmp = asanaAPI.fetchAsanaTaskstFromSectioons([Main, Spot]);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    var tmp = asanaAPI.fetchAsanaTaskstFromDate(today);
     tmp.then((value) {
       setState(() => {_asanaSectionsTasks = value});
     });
@@ -35,10 +35,10 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
   Widget build(BuildContext context) {
     return GroupedListView<dynamic, String>(
       elements: _asanaSectionsTasks,
-      groupBy: (element) => element['section'],
+      groupBy: (element) => element['group'],
       groupComparator: (value1, value2) => value2.compareTo(value1),
       itemComparator: (item1, item2) => item1['task'].compareTo(item2['task']),
-      order: GroupedListOrder.DESC,
+      order: GroupedListOrder.ASC,
       //useStickyGroupSeparators: true,
       groupSeparatorBuilder: (String value) => Padding(
         padding: const EdgeInsets.all(8.0),
@@ -65,21 +65,3 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
     );
   }
 }
-
-/**
- * Widget build(BuildContext context) {
-    return ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(
-              _asanaSectionsTasks[index].name,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-            ),
-          );
-        },
-        itemCount: _asanaSectionsTasks.length);
-  }
- */
