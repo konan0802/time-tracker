@@ -10,6 +10,26 @@ import 'config.dart';
 class AsanaAPI {
   AsanaAPI();
 
+  Future<void> setTogglTask(String taskName) async {
+    String url = 'https://api.track.toggl.com/api/v8/time_entries/start';
+    Map<String, String> headers = {
+      'content-type': 'application/json',
+      'Authorization': 'Basic ' +
+          base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
+    };
+    String body = json.encode({
+      'time_entry': {
+        'description': taskName,
+        'created_with': 'toggl_pomodoro_app'
+      }
+    });
+    http.Response resp =
+        await http.post(Uri.parse(url), headers: headers, body: body);
+    if (resp.statusCode != 200) {
+      print(resp.body);
+    }
+  }
+
   /// @request  [1234, 5678]
   /// @response [{section: Main, task: []}, {section: Main, task: []}]
   Future<List<Map<String, dynamic>>> fetchAsanaTaskstFromSectioons(
@@ -36,8 +56,7 @@ class AsanaAPI {
   /// @response [{section: Main, task: []}, {section: Main, task: []}]
   Future<List<Map<String, dynamic>>> fetchAsanaTaskstFromDate(
       DateTime dateTime) async {
-    List<Map<String, dynamic>> asanaTaskListToday = [];
-    List<Map<String, dynamic>> asanaTaskListBefore = [];
+    List<Map<String, dynamic>> asanaTaskList = [];
     var res = await fetchAsanaTaskstFromMyTask();
     for (int j = 0; j < res.length; j++) {
       // 期限が入っていないものは対象外
@@ -54,7 +73,7 @@ class AsanaAPI {
           'start_on': res[j].startOn,
           'due_on': res[j].dueOn,
         };
-        asanaTaskListBefore.add(result);
+        asanaTaskList.add(result);
         continue;
       }
       // today判定
@@ -65,7 +84,7 @@ class AsanaAPI {
           'start_on': res[j].startOn,
           'due_on': res[j].dueOn,
         };
-        asanaTaskListToday.add(result);
+        asanaTaskList.add(result);
         continue;
       }
       if (res[j].startOn != null) {
@@ -77,12 +96,11 @@ class AsanaAPI {
             'start_on': res[j].startOn,
             'due_on': res[j].dueOn,
           };
-          asanaTaskListToday.add(result);
+          asanaTaskList.add(result);
         }
       }
     }
-    return Future<List<Map<String, dynamic>>>.value(
-        asanaTaskListBefore + asanaTaskListToday);
+    return Future<List<Map<String, dynamic>>>.value(asanaTaskList);
   }
 
   Future<List<AsanaTask>> fetchAsanaTaskstFromSectioon(String sectionID) async {

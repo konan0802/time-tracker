@@ -59,7 +59,8 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
               icon: Image.asset('images/icon_round.png'),
               iconSize: 27.0,
               onPressed: () {
-                print("toggl");
+                final asanaAPI = AsanaAPI();
+                asanaAPI.setTogglTask(element['task']);
               },
             ),
             title: Text(
