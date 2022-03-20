@@ -52,13 +52,23 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
       itemBuilder: (c, element) {
         return Card(
           elevation: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          color: Colors.grey[300],
+          margin: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 5.0),
           child: ListTile(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-            leading: const Icon(Icons.account_circle),
-            title: Text(element['task']),
-            trailing: const Icon(Icons.arrow_forward),
+            leading: IconButton(
+              icon: Image.asset('images/icon_round.png'),
+              iconSize: 27.0,
+              onPressed: () {
+                print("toggl");
+              },
+            ),
+            title: Text(
+              element['task'],
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         );
       },
