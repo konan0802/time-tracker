@@ -80,6 +80,7 @@ flutter:
     - images/lock.png
     - images/push.png
     - images/pop.png
+    - images/icon_round.png
     - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
