@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -70,9 +71,10 @@ class _TaskInfoState extends State<TaskInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 580.0,
-      padding: const EdgeInsets.only(top: 11, left: 10, right: 10),
-      margin: const EdgeInsets.only(top: 13, left: 10, right: 10, bottom: 1),
+      width: 640.w,
+      height: 530.h,
+      padding: EdgeInsets.only(top: 60.h, left: 15.w, right: 20.w),
+      margin: EdgeInsets.only(top: 35.h, bottom: 28.h),
       decoration: BoxDecoration(
         color: Color.fromARGB(
           255,
@@ -82,7 +84,7 @@ class _TaskInfoState extends State<TaskInfo> {
         ),
         border: Border.all(
           color: Colors.white,
-          width: 3.0,
+          width: 3.0.w,
         ),
         borderRadius: BorderRadius.circular(10),
       ),
@@ -93,12 +95,12 @@ class _TaskInfoState extends State<TaskInfo> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  height: 28,
-                  padding: const EdgeInsets.only(left: 8),
+                  height: 74.sp,
+                  padding: EdgeInsets.only(left: 8.w),
                   child: Text(
                     _taskName,
-                    style: const TextStyle(
-                      fontSize: 23,
+                    style: TextStyle(
+                      fontSize: 57.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
@@ -106,9 +108,12 @@ class _TaskInfoState extends State<TaskInfo> {
                     maxLines: 1,
                   ),
                 ),
+                SizedBox(
+                  height: 60.h,
+                ),
                 Container(
-                  width: 340,
-                  margin: const EdgeInsets.only(left: 58),
+                  width: 355.w,
+                  margin: EdgeInsets.only(left: 58.w),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -119,21 +124,21 @@ class _TaskInfoState extends State<TaskInfo> {
               ],
             ),
           ),
-          const SizedBox(
-            width: 35,
+          SizedBox(
+            width: 15.w,
           ),
           Container(
-            width: 100,
-            margin: const EdgeInsets.only(bottom: 10, right: 20),
+            width: 100.w,
+            margin: EdgeInsets.only(bottom: 10.h, right: 25.w),
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(top: 120.h),
                   child: TodaysTaskInfo(
                       _todaysTaskTimeHour, _todaysTaskTimeMinutes),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(top: 50.h),
                   child:
                       TotalTaskInfo(_totalTaskTimeHour, _totalTaskTimeMinutes),
                 ),

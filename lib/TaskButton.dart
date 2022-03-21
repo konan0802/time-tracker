@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -23,27 +24,27 @@ class _TaskButtonState extends State<TaskButton> {
       children: [
         IconButton(
           icon: Image.asset('images/mtg.png'),
-          iconSize: 123,
+          iconSize: 310.h,
           onPressed: () {
             setTogglTask(MtgTime);
           },
         ),
-        const SizedBox(
-          width: 75,
+        SizedBox(
+          width: 80.w,
         ),
         IconButton(
           icon: Image.asset('images/other.png'),
-          iconSize: 123,
+          iconSize: 310.h,
           onPressed: () {
             setTogglTask(OtherTime);
           },
         ),
-        const SizedBox(
-          width: 75,
+        SizedBox(
+          width: 80.w,
         ),
         IconButton(
           icon: Image.asset('images/break.png'),
-          iconSize: 123,
+          iconSize: 310.h,
           onPressed: () {
             setTogglTask(BreakTime);
           },

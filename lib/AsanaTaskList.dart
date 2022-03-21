@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 import 'AsanaAPI.dart';
@@ -41,23 +42,25 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
       order: GroupedListOrder.ASC,
       //useStickyGroupSeparators: true,
       groupSeparatorBuilder: (String value) => Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0.w),
         child: Text(
           value,
           textAlign: TextAlign.center,
-          style: const TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(
+              fontSize: 50.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
         ),
       ),
       itemBuilder: (c, element) {
         return Card(
           elevation: 8.0,
           color: Colors.grey[300],
-          margin: const EdgeInsets.symmetric(horizontal: 35.0, vertical: 5.0),
+          margin: EdgeInsets.symmetric(horizontal: 35.0.w, vertical: 6.0.h),
           child: ListTile(
             leading: IconButton(
               icon: Image.asset('images/icon_round.png'),
-              iconSize: 27.0,
+              iconSize: 20.h,
               onPressed: () {
                 final asanaAPI = AsanaAPI();
                 asanaAPI.setTogglTask(element['task']);
@@ -65,8 +68,8 @@ class _AsanaTaskListState extends State<AsanaTaskList> {
             ),
             title: Text(
               element['task'],
-              style: const TextStyle(
-                fontSize: 15,
+              style: TextStyle(
+                fontSize: 33.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),

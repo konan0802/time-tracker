@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TotalTaskInfo extends StatefulWidget {
   final String _totalTaskTimeHour;
@@ -20,21 +21,21 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
             color: Colors.white,
-            width: 2.0,
+            width: 2.0.w,
           ),
         ),
       ),
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const Text(
+            Text(
               "Month",
               style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 32.sp,
                   fontWeight: FontWeight.w600,
                   color: Colors.white),
             ),
@@ -43,31 +44,31 @@ class _TotalTaskInfoState extends State<TotalTaskInfo> {
               children: [
                 Text(
                   widget._totalTaskTimeHour,
-                  style: const TextStyle(
-                      fontSize: 23,
+                  style: TextStyle(
+                      fontSize: 52.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
-                const Text(
+                Text(
                   "h",
                   style: TextStyle(
-                      height: 1.8,
-                      fontSize: 16,
+                      height: 1.8.h,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
                 Text(
                   widget._totalTaskTimeMinutes.padLeft(2, "0"),
-                  style: const TextStyle(
-                      fontSize: 23,
+                  style: TextStyle(
+                      fontSize: 52.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),
-                const Text(
+                Text(
                   "m",
                   style: TextStyle(
-                      height: 1.8,
-                      fontSize: 16,
+                      height: 1.8.h,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white),
                 ),

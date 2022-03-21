@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:toggl_pomodoro_app/SubPage.dart';
@@ -27,18 +28,20 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 3, left: 20, right: 10, bottom: 1),
+      margin: EdgeInsets.only(top: 28.h, left: 25.w, right: 25.w),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             _time,
-            style: const TextStyle(
-                fontSize: 30, fontWeight: FontWeight.w500, color: Colors.white),
+            style: TextStyle(
+                fontSize: 80.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.white),
           ),
           IconButton(
             icon: Image.asset('images/' + widget._navType + '.png'),
-            iconSize: 40,
+            iconSize: 36.w,
             onPressed: () {
               if (widget._navType == 'push') {
                 Navigator.push(

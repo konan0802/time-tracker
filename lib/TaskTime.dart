@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaskTime extends StatefulWidget {
   // TaskInfoからタスクの経過時間を取得
@@ -24,19 +25,23 @@ class _TaskTimeState extends State<TaskTime> {
       children: [
         Text(
           widget._taskTimeMinutes,
-          style: const TextStyle(
-              fontSize: 98, fontWeight: FontWeight.w600, color: Colors.white),
+          style: TextStyle(
+              fontSize: 230.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.white),
         ),
-        const Text(
+        Text(
           ":",
           style: TextStyle(
-              fontSize: 98, fontWeight: FontWeight.w600, color: Colors.white),
+              fontSize: 230.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.white),
         ),
         Text(
           widget._taskTimeSeconds.padLeft(2, "0"),
-          style: const TextStyle(
+          style: TextStyle(
               height: 1.45,
-              fontSize: 80,
+              fontSize: 200.sp,
               fontWeight: FontWeight.w600,
               color: Colors.white),
         ),
