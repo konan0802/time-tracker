@@ -88,39 +88,43 @@ class _TaskInfoState extends State<TaskInfo> {
       ),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                height: 28,
-                padding: const EdgeInsets.only(left: 8),
-                child: Text(
-                  _taskName,
-                  style: const TextStyle(
-                    fontSize: 23,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 28,
+                  padding: const EdgeInsets.only(left: 8),
+                  child: Text(
+                    _taskName,
+                    style: const TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
-              ),
-              Container(
-                width: 340,
-                margin: const EdgeInsets.only(left: 58),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TaskTime(_taskTimeMinutes, _taskTimeSeconds),
-                  ],
+                Container(
+                  width: 340,
+                  margin: const EdgeInsets.only(left: 58),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TaskTime(_taskTimeMinutes, _taskTimeSeconds),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(
             width: 35,
           ),
           Container(
             width: 100,
-            margin: const EdgeInsets.only(bottom: 10),
+            margin: const EdgeInsets.only(bottom: 10, right: 20),
             child: Column(
               children: [
                 Container(
