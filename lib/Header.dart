@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:toggl_pomodoro_app/SubPage.dart';
@@ -61,11 +62,14 @@ class _HeaderState extends State<Header> {
   }
 
   void _onTimer(Timer timer) {
+    initializeDateFormatting('ja');
     var now = DateTime.now();
-    var dateFormat = DateFormat('M月d日(E) HH:mm');
-    var timeString = dateFormat.format(now);
+    String md = DateFormat.MMMd('ja').format(now).toString();
+    String week = DateFormat.EEEE('ja').format(now)[0].toString();
+    DateFormat hmDateFormat = DateFormat('HH:mm');
+    String hm = hmDateFormat.format(now);
     if (mounted) {
-      setState(() => {_time = timeString});
+      setState(() => {_time = md + '(' + week + ') ' + hm});
     }
   }
 }
