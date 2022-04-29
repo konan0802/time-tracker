@@ -3,7 +3,7 @@
 toggl_pomodoro_appは[Toggl](https://toggl.com/)を<br>
 <b>”ポモドーロタイマー”</b>として活用するためのiOSアプリです 
 
-<img src="images/icon.png" width="200"><br>
+<img src="images/icon_round.png" width="200"><br>
 
 ## Features
 
