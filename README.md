@@ -35,9 +35,7 @@
 
 ### Deploy
 Reference
-* [iOSアプリの配布方法まとめ](https://qiita.com/mokkos/items/85540e95404df4a9c5a4)
-* [iOS アプリ - Ad Hoc 配布の方法](https://softmoco.com/devenv/ios-ad-hoc-distribution.php)
-* [iOSアプリの開発環境構築・テスト配布方法](https://www.itd-blog.jp/entry/ios-app)
+* [iOS アプリ - TestFlight 配布の方法](https://softmoco.com/devenv/ios-test-flight-distribution.php)
 ### Tips
 * アイコンの更新
     ```bash
