@@ -1,16 +1,9 @@
 # toggl_pomodoro_app
-
 [Toggl](https://toggl.com/)と[Asana](https://asana.com/ja)を連携させて、”ポモドーロタイマー”</b>として活用するためのiOSアプリ
 
-<img src="images/icon_round.png" width="200"><br>
+![8co2c-1ea9a](https://user-images.githubusercontent.com/46038618/166850792-35d5eced-4bbb-4667-8ae3-e709d6089aee.gif)
 
 ## Features
-
-## Requirement
-
-## Installation
-
-## Usage
 
 ## Get Start
 ### Test
