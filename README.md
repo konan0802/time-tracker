@@ -38,6 +38,9 @@ Reference
 * [iOS アプリ - TestFlight 配布の方法](https://softmoco.com/devenv/ios-test-flight-distribution.php)
 ### Tips
 * アイコンの更新
-    ```bash
-    $ flutter pub run flutter_launcher_icons:main
-    ```
+    1. アイコンの保存<br>
+        * 保存先：lib/assets/icon.png
+    2. アップデート
+        ```bash
+        $ flutter pub run flutter_launcher_icons:main
+        ```
