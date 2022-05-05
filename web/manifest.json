@@ -1,6 +1,6 @@
 {
-    "name": "toggl_pomodoro_app",
-    "short_name": "toggl_pomodoro_app",
+    "name": "time_tracker",
+    "short_name": "time_tracker",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
-import 'package:toggl_pomodoro_app/SubPage.dart';
+import 'package:time_tracker/SubPage.dart';
 
 class Header extends StatefulWidget {
   final String _navType;

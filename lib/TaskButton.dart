@@ -61,10 +61,7 @@ class _TaskButtonState extends State<TaskButton> {
           base64Encode(utf8.encode(dotenv.env['TOGGL_API_KEY']! + ':api_token'))
     };
     String body = json.encode({
-      'time_entry': {
-        'description': taskName,
-        'created_with': 'toggl_pomodoro_app'
-      }
+      'time_entry': {'description': taskName, 'created_with': 'time_tracker'}
     });
     http.Response resp =
         await http.post(Uri.parse(url), headers: headers, body: body);

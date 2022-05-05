@@ -17,7 +17,7 @@
 ### Test
 * シミュレーターでの実行
     ```bash
-    $ cd toggl_pomodoro_app
+    $ cd time_tracker
     $ open -a Simulator
     $ flutter run
     ```

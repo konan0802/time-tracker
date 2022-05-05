@@ -1,4 +1,4 @@
-package com.example.toggl_pomodoro_app
+package com.example.time_tracker
 
 import io.flutter.embedding.android.FlutterActivity
 
