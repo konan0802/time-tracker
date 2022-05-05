@@ -27,8 +27,24 @@
     [flutterをiPhone(実機)にインストールする方法](https://zenn.dev/nnabeyang/scraps/62cea9e93a4409)
 
 ### Deploy
-Reference
-* [iOS アプリ - TestFlight 配布の方法](https://softmoco.com/devenv/ios-test-flight-distribution.php)
+1. **Xcodeからアプリをアップロード**
+    1. Simulatorに「Any iOS Device」を選択
+    2. Product > Archive
+    3. Archives画面の「Distribute App」
+    4. 「App Store Conect」
+    5. 「Upload」
+    5. 全てチェック
+    6. 適切なProfileを選択
+    7. 「Upload」
+2. **App Store Connectから配布**
+    1. [App Store Connect](https://appstoreconnect.apple.com/apps)を開く
+    2. TestFlightタブを選択
+    3. 新しくビルドされたアプリを確認
+        * グループが適切か確認
+        * ステータスに「輸出コンプライアンスがありません。」と表示されている場合には対処<br>
+        ※ 基本的に全て「はい」を選択
+
+[iOS アプリ - TestFlight 配布の方法](https://softmoco.com/devenv/ios-test-flight-distribution.php)
 ### Tips
 * アイコンの更新
     1. アイコンの保存<br>
